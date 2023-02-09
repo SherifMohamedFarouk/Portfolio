@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:portfolio/view/main_page/widgets/app_bar.dart';
 
+import '../../shared/global/globalkeys.dart';
 import '../../shared/theme/color_palete.dart';
 import '../user_info/user_info.dart';
 import '../user_projects/user_projects.dart';
@@ -18,7 +19,6 @@ class ProfileScreen extends StatelessWidget {
         preferredSize: Size(screenWidth * 0.1, screenHeight * 0.07),
         child: AppBarWidget(),
       ),
-      backgroundColor: Colors.white,
       body: SingleChildScrollView(
         child: Container(
           width: screenWidth,
@@ -33,7 +33,7 @@ class ProfileScreen extends StatelessWidget {
               SizedBox(
                 height: screenHeight * 0.4,
               ),
-              UserProjects()
+              UserProjects(key:projectsGlobalKey)
             ],
           ),
         ),

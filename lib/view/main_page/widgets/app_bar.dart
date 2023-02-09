@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import '../../../shared/global/globalkeys.dart';
 import '../../../shared/theme/color_palete.dart';
 
 class AppBarWidget extends StatefulWidget {
@@ -81,7 +82,9 @@ class _AppBarWidgetState extends State<AppBarWidget> {
               width: screenWidth * 0.035,
             ),
             InkWell(
-              onTap: () {},
+              onTap: () {
+                  Scrollable.ensureVisible(projectsGlobalKey.currentContext!,curve: Curves.easeInOutCubic,duration:const  Duration(seconds: 1));
+              },
               child: Text(
                 'Projects',
                 style: Theme.of(context).textTheme.bodyMedium!.copyWith(

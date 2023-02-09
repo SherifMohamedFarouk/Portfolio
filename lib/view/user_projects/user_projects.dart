@@ -1,68 +1,117 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:portfolio/shared/theme/color_palete.dart';
 
-final List<String> imgList = [
-  'https://images.unsplash.com/photo-1520342868574-5fa3804e551c?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=6ff92caffcdd63681a35134a6770ed3b&auto=format&fit=crop&w=1951&q=80',
-  'https://images.unsplash.com/photo-1522205408450-add114ad53fe?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=368f45b0888aeb0b7b08e3a1084d3ede&auto=format&fit=crop&w=1950&q=80',
-  'https://images.unsplash.com/photo-1519125323398-675f0ddb6308?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=94a1e718d89ca60a6337a6008341ca50&auto=format&fit=crop&w=1950&q=80',
-  'https://images.unsplash.com/photo-1523205771623-e0faa4d2813d?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=89719a0d55dd05e2deae4120227e6efc&auto=format&fit=crop&w=1953&q=80',
-  'https://images.unsplash.com/photo-1508704019882-f9cf40e475b4?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=8c6e5e3aba713b17aa1fe71ab4f0ae5b&auto=format&fit=crop&w=1352&q=80',
-  'https://images.unsplash.com/photo-1519985176271-adb1088fa94c?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=a0c8d632e977f94e5d312d9893258f59&auto=format&fit=crop&w=1355&q=80'
-];
+import '../../shared/responsive/responsive.dart';
+import 'list_of_projects.dart';
 
-class UserProjects extends StatelessWidget {
-  final List<Widget> imageSliders = imgList
-      .map((item) => Container(
-            margin: const EdgeInsets.all(10),
-            child: ClipRRect(
-                borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                child: Stack(
-                  children: <Widget>[
-                    Image.network(item, fit: BoxFit.cover, width: 500.0),
-                    Positioned(
-                      bottom: 0.0,
-                      left: 0.0,
-                      right: 0.0,
-                      child: Container(
-                        decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                            colors: [
-                              Color.fromARGB(200, 0, 0, 0),
-                              Color.fromARGB(0, 0, 0, 0)
-                            ],
-                            begin: Alignment.bottomCenter,
-                            end: Alignment.topCenter,
-                          ),
-                        ),
-                        padding: EdgeInsets.symmetric(
-                            vertical: 10.0, horizontal: 20.0),
-                        child: Text(
-                          'No. ${imgList.indexOf(item)} image',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 20.0,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                )),
-          ))
-      .toList();
+class UserProjects extends StatefulWidget {
+  const UserProjects({super.key});
+
+  @override
+  State<UserProjects> createState() => _UserProjectsState();
+}
+
+class _UserProjectsState extends State<UserProjects> {
+
   @override
   Widget build(BuildContext context) {
-    return Container(
-        child: CarouselSlider(
-      options: CarouselOptions(
-          height: 500,
-          viewportFraction: 0.5,
-          aspectRatio: 2.0,
-          enlargeCenterPage: true,
-          scrollDirection: Axis.horizontal,
-          autoPlay: true,
-          autoPlayAnimationDuration: Duration(seconds: 3)),
-      items: imageSliders,
-    ));
+    var screenWidth = MediaQuery.of(context).size.width;
+    var screenHeight = MediaQuery.of(context).size.height;
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Text("PROJECTS",
+            style: Theme.of(context).textTheme.displayMedium!.copyWith(
+                fontWeight: FontWeight.w600,
+                letterSpacing:3.0,
+                fontSize: Responsive.isMobile(context)?25:screenWidth * 0.024,
+            )),
+        const SizedBox(
+          height: 20,
+        ),
+        Text(
+            "Here are some of the personal and company's projects i worked on, with pictures and description  ",
+            style: Theme.of(context).textTheme.headline4!.copyWith(
+                fontWeight: FontWeight.w200,
+                fontSize: Responsive.isMobile(context)?20:screenWidth * 0.012,
+            )),
+        ListView.builder(
+          shrinkWrap: true,
+          itemBuilder: (context, index) {
+            return Container(
+              padding: EdgeInsets.symmetric(horizontal: 12,vertical: 20),
+              child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Image.asset(projectList[index].images![0]),
+                     SizedBox(
+                      width: screenWidth * 0.10,
+                    ),
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Text(projectList[index].title!,
+                            textAlign: TextAlign.center,
+                            style: Theme.of(context)
+                                .textTheme
+                                .headline4!
+                                .copyWith(
+                                    fontWeight: FontWeight.w900,
+                                fontSize: Responsive.isMobile(context)?20:screenWidth * 0.02,
+                                    )),
+                        const SizedBox(
+                          height: 12,
+                        ),
+                        SizedBox(
+                          width: screenWidth*0.25,
+                          child: Text(
+                              projectList[index].description!,
+                              textAlign: TextAlign.center,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .headline4!
+                                  .copyWith(
+                                      fontWeight: FontWeight.w200,
+                                  fontSize: Responsive.isMobile(context)?16:screenWidth * 0.010,
+                              )),
+                        ),
+                        const SizedBox(
+                          height: 12,
+                        ),
+                        ElevatedButton(
+                          onPressed: () {},
+                          style: ElevatedButton.styleFrom(
+                            padding: EdgeInsets.all(20),
+                            elevation: 0,
+                            shadowColor: Colors.black12,
+                            disabledForegroundColor: primaryBrown.withOpacity(0.38),
+                            disabledBackgroundColor: primaryBrown.withOpacity(0.38),
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(4)),
+                            backgroundColor: secondaryLightBrown,
+                          ),
+                          child: Text(
+                            'See more',
+                            textAlign: TextAlign.center,
+                            style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                              fontSize: 18,
+                              fontWeight: FontWeight.w500,
+                              color: () {} == null ? primaryGray : Colors.white,
+                            ),
+                          ),
+                        ),
+                      ],
+                    )
+                  ]),
+            );
+          },
+          itemCount: projectList.length,
+        )
+      ],
+    );
   }
 }
